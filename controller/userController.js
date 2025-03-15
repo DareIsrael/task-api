@@ -2,11 +2,11 @@ const userModel = require("../model/userModel");
 const jwt = require("jsonwebtoken");
 
 // Create JWT token
-const createToken = ( id ) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "7d" });
-};
+// const createToken = ( id, name) => {
+//   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "7d" });
+// };
 
-// Register a new user
+
 const register = async (req, res) => {
   const { name, email, password, phone, country, company } = req.body;
 
@@ -37,26 +37,27 @@ const register = async (req, res) => {
   }
 };
 
-// Login user
+
 const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // Find the user by email
     const user = await userModel.findOne({ email });
     if (!user) {
       return res.status(400).json({ success: false, message: "User does not exist" });
     }
 
-    // Check if the provided password matches the stored password
     const isMatch = await user.matchPassword(password);
-
     if (!isMatch) {
       return res.status(400).json({ success: false, message: "Invalid credentials" });
     }
 
-    // Generate a token
-    const token = createToken(user._id);
+    
+    const token = jwt.sign(
+      { id: user._id, name: user.name },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
 
     res.json({ success: true, token });
   } catch (error) {
@@ -64,6 +65,7 @@ const login = async (req, res) => {
     res.status(500).json({ success: false, message: "Error occurred while logging in" });
   }
 };
+
 
 // Get all users
 const getUsers = async (req, res) => {

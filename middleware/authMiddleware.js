@@ -12,17 +12,16 @@ const authMiddleware = async (req, res, next) => {
    }
 
    try {
-      // Verify the token using the secret key
+      
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-      // Attach the user ID to the request object for further use
-      req.user = decoded.id;
+      
+      req.user = decoded;
 
-      // Continue to the next middleware/route handler
+      
       next();
    } catch (error) {
-      console.error('JWT Error:', error.message);  // Log error message for debugging
-
+      console.error('JWT Error:', error.message);  
       return res.status(401).json({
          success: false,
          message: 'Invalid or expired token. Please log in again.'
@@ -31,3 +30,5 @@ const authMiddleware = async (req, res, next) => {
 };
 
 module.exports = { authMiddleware };
+
+

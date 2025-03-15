@@ -4,9 +4,7 @@ const { connectDB } = require("./config/db.js");
 const userRouter = require("./route/userRoute.js")
 
 require('dotenv').config();
-// const cartRouter = require("./routes/cartRoute.js");
 
-// app config
 
 const app = express()
 const port = 5000
@@ -29,7 +27,7 @@ connectDB();
 // api endpoints
 
 app.use("/users", userRouter)
-// app.use("/images",express.static('upload'))
+
 
 
 app.get("/", (req, res)=> {
