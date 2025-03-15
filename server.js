@@ -16,6 +16,10 @@ const port = 5000
 
 app.use(cors());
 app.use(express.json());
+app.use(cors({
+    origin: [process.env.FRONTEND_URL_LOCAL, process.env.FRONTEND_URL_HOST], // Replace with your actual frontend URLs
+    credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+  }));
 
 
 app.use(express.urlencoded({ extended: true }));
