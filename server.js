@@ -14,9 +14,9 @@ const port = 5000
 
 // middleware
 
-// app.use(cors());
+app.use(cors());
 app.use(express.json());
-app.use(cors({ origin:"https://task-api-aiy0.onrender.com", credentials: true }));
+// app.use(cors({ origin: process.env.FRONTEND_URL_HOST, credentials: true }));
 
 
 app.use(express.urlencoded({ extended: true }));
