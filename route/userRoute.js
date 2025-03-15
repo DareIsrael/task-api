@@ -9,7 +9,7 @@ userRouter.post("/register", register);
 
 
 userRouter.post("/login", login);
-userRouter.get("/getUsers", authMiddleware, getUsers);
+userRouter.get("/getUsers", getUsers);
 
-
+// authMiddleware, 
 module.exports = userRouter;
